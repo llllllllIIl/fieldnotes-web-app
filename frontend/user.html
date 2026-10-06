@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile — Fieldnotes</title>
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<header class="topbar">
+  <div class="brand">FIELDNOTES<b>//</b>PROFILE</div>
+  <nav>
+    <span class="status"><i></i><b id="roleTag">MEMBER</b></span>
+    <a href="index.html">Reader</a>
+    <a id="dashLink" class="btn-dashboard" href="dashboard.html" hidden>Dashboard</a>
+    <button id="logoutBtn" class="secondary">Log out</button>
+  </nav>
+</header>
+<main>
+  <p class="kicker">Your member dashboard</p>
+  <section class="card accent-top">
+    <h1 id="profileEmail">…</h1>
+    <p class="meta" id="memberSince"></p>
+    <div class="stats">
+      <div class="stat"><b id="statComments">0</b><span>comments</span></div>
+      <div class="stat"><b id="statLikes">0</b><span>likes received</span></div>
+      <div class="stat"><b id="statFires">0</b><span>fires received</span></div>
+    </div>
+  </section>
+  <h2>My recent comments</h2>
+  <div id="myComments"><p class="meta">Loading…</p></div>
+</main>
+<script src="background.js"></script>
+<script src="user.js"></script>
+</body>
+</html>

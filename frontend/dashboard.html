@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Fieldnotes</title>
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<header class="topbar">
+  <div class="brand">FIELDNOTES<b>//</b>CONSOLE</div>
+  <nav>
+    <span class="status"><i></i>ADMIN</span>
+    <a href="index.html">Reader</a>
+    <button id="logoutBtn" class="secondary">Log out</button>
+  </nav>
+</header>
+<main>
+  <p class="kicker">Broadcast console — admin only</p>
+  <div id="denied" class="card" hidden>
+    <h1>Admins only</h1>
+    <p class="lede">Your account is signed in but has no admin role.</p>
+  </div>
+  <section id="adminView" hidden>
+    <h1>Transmit <span class="hl">new entry.</span></h1>
+    <p class="lede">Published immediately to authenticated readers.</p>
+    <form id="articleForm" class="card warm-top">
+      <label for="title">Title</label>
+      <input id="title" required minlength="3" maxlength="160">
+      <label for="excerpt">Excerpt</label>
+      <input id="excerpt" required minlength="10" maxlength="300">
+      <label for="tags">Tags (comma separated)</label>
+      <input id="tags" placeholder="notes, process">
+      <label for="content">Content</label>
+      <textarea id="content" required minlength="50"></textarea>
+      <label for="cover">Cover image (optional, max 5 MB)</label>
+      <input id="cover" type="file" accept="image/*">
+      <img id="coverPreview" class="cover-preview" alt="" hidden>
+      <label class="check"><input id="pinned" type="checkbox"> Pin this entry to the top</label>
+      <div id="formError" class="error"></div>
+      <div id="formOk" class="meta"></div>
+      <button type="submit" id="publishBtn">Publish article</button>
+    </form>
+    <h2>Recent</h2>
+    <div id="recent"></div>
+  </section>
+</main>
+<script src="background.js"></script>
+<script src="dashboard.js"></script>
+</body>
+</html>

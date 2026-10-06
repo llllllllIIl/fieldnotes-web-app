@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fieldnotes — Private Blog · Portfolio Project</title>
+<meta name="description" content="Fieldnotes: a members-only tech blog. FastAPI + Supabase + vanilla JS. Portfolio case study with live static demo.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23040404'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='18' font-weight='bold' fill='%23c8ff2e' text-anchor='middle'%3EF%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<canvas id="bg" aria-hidden="true"></canvas>
+<header class="topbar">
+  <div class="brand">FIELDNOTES<b>//</b>PORTFOLIO</div>
+  <nav aria-label="Sections">
+    <span class="status"><i></i>LIVE</span>
+    <a href="demo.html">Demo</a>
+    <a href="#notes">Case notes</a>
+    <a href="#stack">Stack</a>
+  </nav>
+</header>
+<main id="main">
+  <p class="kicker">Portfolio project — full-stack web app</p>
+  <h1>Fieldnotes: a tech blog<br>for members <span class="hl">only.</span></h1>
+  <p class="lede">Private lab notes, build logs and essays. Readers must sign in, only admins
+  can publish, and every member can comment and react. This page is a static,
+  self-contained copy — the full app runs on FastAPI + Supabase.</p>
+  <p class="hero-cta">
+    <a class="btn" href="demo.html">Open the live demo</a>
+    <a class="btn-dashboard" href="#notes">Read the case notes</a>
+  </p>
+  <div class="ticker" aria-hidden="true"><span>FULL-STACK // FASTAPI + SUPABASE + VANILLA JS — AUTH REQUIRED — ADMIN PUBLISH ONLY —&nbsp;</span></div>
+
+  <h2>01 / The product</h2>
+  <dl class="rows">
+    <div><dt>Auth-gated reading</dt><dd>No public access: every article route requires a signed-in session.</dd></div>
+    <div><dt>Admin console</dt><dd>Admins publish entries with cover images, tags and pinning from a dashboard.</dd></div>
+    <div><dt>Comments &amp; reactions</dt><dd>Members discuss each entry; likes are open to all, fire is admin-only.</dd></div>
+    <div><dt>Hot-score ranking</dt><dd>Comments sort pinned-first, then reactions weighed against age (see notes).</dd></div>
+    <div><dt>Member profiles</dt><dd>Reputation stats — comments written, likes and fires received — plus recent activity.</dd></div>
+  </dl>
+
+  <h2 id="notes">02 / Case notes</h2>
+  <p class="lede">The decisions that shaped the project, and what comes next.</p>
+
+  <h3 class="note-h">JSON-only API</h3>
+  <p class="lede">The FastAPI backend serves data and nothing else: no templates, no HTML.
+  Auth is a dependency on every route — it verifies the Supabase JWT, resolves
+  the profile and the admin flag, and rejects anything else. Keeping rendering
+  out of the API made the frontend disposable: this static demo reuses the same
+  styles with zero backend.</p>
+
+  <h3 class="note-h">Passwords never touch the API</h3>
+  <p class="lede">Supabase Auth owns credentials end to end (bcrypt). The backend only ever
+  sees a verified user id and email, and the seed script creates the first admin
+  through the Auth API — never by inserting into tables by hand.</p>
+
+  <h3 class="note-h">Ranking as a pure function</h3>
+  <p class="lede">Comment order is <code>pinned → hot score → newest</code>, computed by a
+  pure function with unit tests. Likes come from any member; fires are
+  admin-only endorsements worth five likes each; age decays the score so fresh
+  replies can surface:</p>
+  <pre class="code">score = (likes + 5 × fires) / (age_hours + 2) ^ 1.2</pre>
+  <p class="lede">The demo on this site re-implements the formula in the browser — toggle a
+  few likes and watch the order change.</p>
+
+  <h3 class="note-h">Vanilla frontend, deliberately</h3>
+  <p class="lede">Reader, admin console and profile are plain HTML/CSS/JS: hash routing,
+  template strings with an <code>escapeHtml</code> helper, no build step. It loads
+  instantly and every bug is traceable in minutes. Past a dozen components I
+  would reach for real state management — at this size, vanilla was the right call.</p>
+
+  <h3 class="note-h">What I would do next</h3>
+  <ul class="next">
+    <li>Cursor pagination on article and comment lists.</li>
+    <li>Rate-limit comment posting per member.</li>
+    <li>Row-level-security review so anon keys stay least-privilege.</li>
+  </ul>
+
+  <h2 id="stack">03 / Stack</h2>
+  <dl class="rows">
+    <div><dt>Backend</dt><dd>FastAPI (<code>backend/</code>) — REST API, auth checks, comment ranking.</dd></div>
+    <div><dt>Data &amp; auth</dt><dd>Supabase — Postgres, Auth, and Storage for cover images.</dd></div>
+    <div><dt>Frontend</dt><dd>Plain HTML/CSS/JS (<code>frontend/</code>) — no framework, no bundler.</dd></div>
+    <div><dt>This page</dt><dd>Static copy for GitHub Pages — zero backend, sample data only.</dd></div>
+  </dl>
+
+  <h2 id="how">04 / How it runs</h2>
+  <pre class="arch">browser ──► FastAPI ──► Supabase
+              │            ├─ Postgres (articles, comments, reactions)
+              │            ├─ Auth (sessions, admin roles)
+              │            └─ Storage (cover images)
+              │
+              └─ serves no HTML · passwords never touch the API</pre>
+
+  <h2>05 / Try it</h2>
+  <section class="card accent-top">
+    <h3 class="card-title">Interactive demo, no login needed</h3>
+    <p class="lede">Search and filter sample entries, open one, post a comment, toggle likes —
+    all in your browser. Nothing leaves the page.</p>
+    <p><a class="btn" href="demo.html">Launch demo</a></p>
+  </section>
+
+  <footer class="foot">
+    <p class="meta">Static portfolio copy · Full app setup in the repo README · 2026</p>
+  </footer>
+</main>
+<script src="background.js"></script>
+</body>
+</html>

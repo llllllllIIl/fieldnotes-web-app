@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo — Fieldnotes</title>
+<meta name="description" content="Static demo of the Fieldnotes private blog: search and filter sample articles, read, comment and react — fully in the browser.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23040404'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='18' font-weight='bold' fill='%23c8ff2e' text-anchor='middle'%3EF%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<canvas id="bg" aria-hidden="true"></canvas>
+<header class="topbar">
+  <div class="brand">FIELDNOTES<b>//</b>DEMO</div>
+  <nav aria-label="Sections">
+    <span class="status"><i></i>SAMPLE DATA</span>
+    <a href="index.html">Portfolio</a>
+    <span id="whoami" class="meta">demo reader · member</span>
+  </nav>
+</header>
+<main id="main">
+  <p class="kicker">Static demo — everything runs locally</p>
+  <div class="demo-banner">Demo mode: sample content, no account, no backend. Search, likes and
+  comments live only in this page session.</div>
+
+  <section id="articlesView" aria-label="Articles">
+    <h1>Latest entries</h1>
+    <p class="lede" id="countLine"></p>
+    <div class="filters">
+      <label class="visually-hidden" for="searchInput">Search entries</label>
+      <input id="searchInput" type="search" placeholder="Search title, excerpt, tags…" autocomplete="off">
+      <div id="tagBar" class="tagbar" role="group" aria-label="Filter by tag"></div>
+    </div>
+    <div id="articles"></div>
+  </section>
+
+  <section id="detailView" aria-label="Article" hidden>
+    <button id="backBtn" class="secondary small">← Back to entries</button>
+    <article id="detail" class="detail"></article>
+    <h2>Comments</h2>
+    <p class="meta">Ranked pinned-first, then hot score, then newest — same formula as the API.</p>
+    <form id="commentForm" class="card">
+      <label for="commentBody">Join the discussion</label>
+      <textarea id="commentBody" required maxlength="2000" placeholder="Share your take…"></textarea>
+      <div id="commentError" class="error" role="alert"></div>
+      <button type="submit" id="commentBtn">Post comment</button>
+    </form>
+    <div id="comments"></div>
+  </section>
+</main>
+<script src="background.js"></script>
+<script src="demo-data.js"></script>
+<script src="demo.js"></script>
+</body>
+</html>

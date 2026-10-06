@@ -1,0 +1,14 @@
+# Secrets — never push real keys to GitHub
+backend/.env
+.env
+frontend/config.js
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Editors / OS
+.vscode/
+.DS_Store
+Thumbs.db

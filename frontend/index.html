@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fieldnotes — Private Blog</title>
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<header class="topbar">
+  <div class="brand">FIELDNOTES<b>//</b>LAB</div>
+  <nav>
+    <span class="status"><i></i>LIVE</span>
+    <span id="whoami" class="meta"></span>
+    <a id="profileLink" class="btn-dashboard" href="user.html" hidden>Profile</a>
+    <a id="dashLink" class="btn-dashboard" href="dashboard.html" hidden>Dashboard</a>
+    <button id="logoutBtn" class="secondary" hidden>Log out</button>
+  </nav>
+</header>
+<main>
+  <p class="kicker">Private tech journal — members only</p>
+  <div class="ticker"><span>SIGNAL // NEW ENTRIES DROP HERE — AUTH REQUIRED — ADMIN PUBLISH ONLY —&nbsp;</span></div>
+  <section id="loginView" class="card accent-top">
+    <h1>Jack in to <span class="hl">read.</span></h1>
+    <p class="lede">Private lab notes, build logs and essays. Authenticated readers only.</p>
+    <form id="loginForm">
+      <label for="email">Email</label>
+      <input id="email" type="email" required autocomplete="email">
+      <label for="password">Password</label>
+      <input id="password" type="password" required autocomplete="current-password">
+      <div id="loginError" class="error"></div>
+      <button type="submit">Sign in</button>
+    </form>
+    <p class="meta">No account? <a href="#" id="showSignup">Create one</a></p>
+  </section>
+
+  <section id="signupView" class="card" hidden>
+    <h1>Create an account</h1>
+    <p class="lede">Reader access only. Only existing admins can publish.</p>
+    <form id="signupForm">
+      <label for="suEmail">Email</label>
+      <input id="suEmail" type="email" required autocomplete="email">
+      <label for="suPassword">Password (min 8 characters)</label>
+      <input id="suPassword" type="password" required minlength="8" autocomplete="new-password">
+      <div id="signupError" class="error"></div>
+      <div id="signupOk" class="meta"></div>
+      <button type="submit">Sign up</button>
+    </form>
+    <p class="meta">Already have an account? <a href="#" id="showLogin">Sign in</a></p>
+  </section>
+
+  <section id="articlesView" hidden>
+    <h1>Latest entries</h1>
+    <p class="lede" id="countLine"></p>
+    <div id="articles"></div>
+  </section>
+
+  <section id="detailView" hidden>
+    <button id="backBtn" class="secondary small">← Back to entries</button>
+    <article id="detail" class="detail"></article>
+    <h2>Comments</h2>
+    <form id="commentForm" class="card">
+      <label for="commentBody">Join the discussion</label>
+      <textarea id="commentBody" required maxlength="2000" placeholder="Share your take…"></textarea>
+      <div id="commentError" class="error"></div>
+      <button type="submit" id="commentBtn">Post comment</button>
+    </form>
+    <div id="comments"></div>
+  </section>
+</main>
+<script src="background.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
